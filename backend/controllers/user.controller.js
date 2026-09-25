@@ -133,16 +133,13 @@ export const updateProfile = async (req, res) => {
         const { fullName, email, phoneNumber, bio, skills } = req.body;
         const file = req.file;
 
-        if (!fullName || !email || !phoneNumber || !bio || !skills) {
-            return res.status(400).json({
-                message: "Something is missing",
-                success: false
-            });
-        }
 
         // Cloudinary
-
-        const skillsArray = skills.split(",");
+       let skillsArray;
+       if(skills){
+           skillsArray = skills.split(",");
+       }
+        
 
         const userId = req.id; // middleware authentication
 
@@ -156,11 +153,16 @@ export const updateProfile = async (req, res) => {
         }
 
         // Updating data
-        user.fullName = fullName;
-        user.email = email;
-        user.phoneNumber = phoneNumber;
-        user.profile.bio = bio;
-        user.profile.skills = skillsArray;
+        if(fullName) user.fullName = fullName;
+        if(email) user.email = email;
+        if(phoneNumber) user.phoneNumber = phoneNumber;
+        if(bio) user.profile.bio = bio;
+        if(skills) user.profile.skills = skillsArray;           
+        
+        
+        
+        
+        
 
         await user.save();
 
