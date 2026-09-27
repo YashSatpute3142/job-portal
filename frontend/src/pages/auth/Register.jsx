@@ -1,34 +1,131 @@
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "@/components/ui/toast";
+import { registerUser } from "@/api/userApi";
 
 export const Register = () => {
+    const [mousePosition, setMousePosition] = useState({
+        x: 0,
+        y: 0,
+    });
+
+    const [isHovering, setIsHovering] = useState(false);
+
+    const [input, setInput] = useState({
+        fullName: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        role: "",
+        file: null,
+    });
+    const navigate = useNavigate();
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+
+        setMousePosition({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        });
+    };
+
+    const changeEventHandler = (e) => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const changeFileHandler = (e) => {
+        setInput({
+            ...input,
+            file: e.target.files?.[0],
+        });
+    };
+
+    const submitHamdler = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("fullName", input.fullName);
+    formData.append("email", input.email);
+    formData.append("phoneNumber", input.phoneNumber);
+    formData.append("password", input.password);
+    formData.append("role", input.role);
+
+    if (input.file) {
+        formData.append("file", input.file);
+    }
+
+    try {
+        const res = await registerUser(formData);
+
+        if (res.data.success) {
+            toast.add({
+                title: "Success",
+                description: res.data.message,
+                type: "success",
+            });
+
+            navigate("/login");
+        }
+    } catch (error) {
+        console.error(error);
+
+        toast.add({
+            title: "Error",
+            description:
+                error.response?.data?.message || "Something went wrong",
+            type: "error",
+        });
+    }
+};
+
     return (
         <div className="w-full">
             <div className="max-w-6xl mx-auto px-6 mt-12 mb-8">
-
                 <div className="flex items-center gap-16">
 
-                    {/* LEFT SIDE - IMAGE */}
                     <div className="w-1/2 flex items-center justify-center">
-                        <img
-                            src="/assets/signup.avif"
-                            alt="Sign Up"
-                            className="w-full max-w-md object-contain"
-                        />
+                        <div
+                            className="relative w-full max-w-md overflow-hidden"
+                            onMouseMove={handleMouseMove}
+                            onMouseEnter={() => setIsHovering(true)}
+                            onMouseLeave={() => setIsHovering(false)}
+                        >
+                            <img
+                                src="/assets/signup-gray.png"
+                                alt="Sign Up"
+                                className="w-full object-contain"
+                            />
+
+                            <img
+                                src="/assets/signup-color.png"
+                                alt="Sign Up"
+                                className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                                style={{
+                                    clipPath: isHovering
+                                        ? `circle(100px at ${mousePosition.x}px ${mousePosition.y}px)`
+                                        : "circle(0px at 0px 0px)",
+                                }}
+                            />
+                        </div>
                     </div>
 
-                    {/* RIGHT SIDE - FORM */}
                     <div className="w-1/2">
-
-                        <form className="w-full border border-gray-200 rounded-md p-6">
-
+                        <form
+                            onSubmit={submitHamdler}
+                            className="w-full border border-gray-200 rounded-md p-6"
+                        >
                             <h1 className="font-bold text-2xl mb-6">
                                 Sign Up
                             </h1>
 
-                            {/* FULL NAME */}
                             <div className="mb-4">
                                 <Label
                                     htmlFor="fullName"
@@ -42,10 +139,11 @@ export const Register = () => {
                                     name="fullName"
                                     type="text"
                                     placeholder="Enter Full Name"
+                                    value={input.fullName}
+                                    onChange={changeEventHandler}
                                 />
                             </div>
 
-                            {/* EMAIL */}
                             <div className="mb-4">
                                 <Label
                                     htmlFor="email"
@@ -59,10 +157,11 @@ export const Register = () => {
                                     name="email"
                                     type="email"
                                     placeholder="xyz@gmail.com"
+                                    value={input.email}
+                                    onChange={changeEventHandler}
                                 />
                             </div>
 
-                            {/* PHONE */}
                             <div className="mb-4">
                                 <Label
                                     htmlFor="phoneNumber"
@@ -76,10 +175,11 @@ export const Register = () => {
                                     name="phoneNumber"
                                     type="text"
                                     placeholder="Enter phone no"
+                                    value={input.phoneNumber}
+                                    onChange={changeEventHandler}
                                 />
                             </div>
 
-                            {/* PASSWORD */}
                             <div className="mb-4">
                                 <Label
                                     htmlFor="password"
@@ -93,15 +193,13 @@ export const Register = () => {
                                     name="password"
                                     type="password"
                                     placeholder="Enter password"
+                                    value={input.password}
+                                    onChange={changeEventHandler}
                                 />
                             </div>
 
-                            {/* ROLE + PROFILE */}
                             <div className="flex items-center justify-between mb-6">
-
-                                {/* ROLE */}
                                 <div className="flex items-center gap-4">
-
                                     <Label>
                                         Role
                                     </Label>
@@ -112,6 +210,8 @@ export const Register = () => {
                                             name="role"
                                             value="student"
                                             className="w-4 h-4 cursor-pointer"
+                                            checked={input.role === "student"}
+                                            onChange={changeEventHandler}
                                         />
 
                                         <span>
@@ -125,18 +225,17 @@ export const Register = () => {
                                             name="role"
                                             value="recruiter"
                                             className="w-4 h-4 cursor-pointer"
+                                            checked={input.role === "recruiter"}
+                                            onChange={changeEventHandler}
                                         />
 
                                         <span>
                                             Recruiter
                                         </span>
                                     </label>
-
                                 </div>
 
-                                {/* PROFILE */}
                                 <div className="flex items-center gap-3">
-
                                     <Label htmlFor="profile">
                                         Profile
                                     </Label>
@@ -147,13 +246,11 @@ export const Register = () => {
                                         type="file"
                                         accept="image/*"
                                         className="cursor-pointer"
+                                        onChange={changeFileHandler}
                                     />
-
                                 </div>
-
                             </div>
 
-                            {/* SIGN UP BUTTON */}
                             <Button
                                 type="submit"
                                 className="w-full bg-black text-white hover:bg-gray-800"
@@ -161,8 +258,7 @@ export const Register = () => {
                                 Sign Up
                             </Button>
 
-                            {/* LOGIN LINK */}
-                            <div className="mt-5">
+                            <div className="mt-5 text-sm">
                                 Already have account?{" "}
 
                                 <Link
@@ -172,13 +268,10 @@ export const Register = () => {
                                     Login
                                 </Link>
                             </div>
-
                         </form>
-
                     </div>
 
                 </div>
-
             </div>
         </div>
     );
