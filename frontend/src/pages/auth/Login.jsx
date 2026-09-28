@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/toast";
 import { loginUser } from "@/api/userApi";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 export const Login = () => {
     const [mousePosition, setMousePosition] = useState({
@@ -19,7 +22,10 @@ export const Login = () => {
         password: "",
         role: "",
     });
+
+    const {loading} = useSelector(store=> store.auth)
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleMouseMove = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -39,8 +45,8 @@ export const Login = () => {
 
    const submitHamdler = async (e) => {
     e.preventDefault();
-
     try {
+        dispatch(setLoading(true))
         const res = await loginUser(input);
 
         if (res.data.success) {
@@ -61,6 +67,8 @@ export const Login = () => {
                 error.response?.data?.message || "Something went wrong",
             type: "error",
         });
+    }finally{
+        dispatch(setLoading(false))
     }
 };
     return (
@@ -175,13 +183,15 @@ export const Login = () => {
                                     </label>
                                 </div>
                             </div>
-
-                            <Button
+                            {
+                             loading ? <button className="m-full my-4"> <Loader2 className="mr-2 h-4 w-4 animate-spin" />Please wait </button> : <Button
                                 type="submit"
                                 className="w-full bg-black text-white hover:bg-gray-800"
                             >
                                 Login
                             </Button>
+                            }
+                            
 
                             <div className="mt-5 text-sm">
                                 Don't have account?{" "}

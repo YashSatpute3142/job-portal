@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/toast";
 import { registerUser } from "@/api/userApi";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 export const Register = () => {
     const [mousePosition, setMousePosition] = useState({
@@ -22,7 +25,10 @@ export const Register = () => {
         role: "",
         file: null,
     });
+
+    const {loading} = useSelector(store=>store.auth)
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const handleMouseMove = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -63,6 +69,7 @@ export const Register = () => {
     }
 
     try {
+        dispatch(setLoading(true))
         const res = await registerUser(formData);
 
         if (res.data.success) {
@@ -83,6 +90,8 @@ export const Register = () => {
                 error.response?.data?.message || "Something went wrong",
             type: "error",
         });
+    }finally{
+        dispatch(setLoading(false))
     }
 };
 
@@ -251,12 +260,14 @@ export const Register = () => {
                                 </div>
                             </div>
 
-                            <Button
+                            {
+                                loading ? <Button className="w-full my-4"> <Loader2 className="r-2 h-4 w-4 animate-spin" />Please wait</Button>: <Button
                                 type="submit"
                                 className="w-full bg-black text-white hover:bg-gray-800"
                             >
                                 Sign Up
                             </Button>
+                            }
 
                             <div className="mt-5 text-sm">
                                 Already have account?{" "}
