@@ -4,7 +4,7 @@ import {
     CarouselItem,
     CarouselNext,
     CarouselPrevious
-} from "./carousel";
+} from "../ui/carousel";
 import { Button } from "@/components/ui/button";
 
 const category = [

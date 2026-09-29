@@ -1,11 +1,14 @@
-import { CategoryCarousel } from "@/components/ui/CategoryCarousel"
-import { HeroSection } from "@/components/ui/Herosetion"
+import { CategoryCarousel } from "@/components/homepage/CategoryCarousel"
+import { HeroSection } from "@/components/homepage/Herosetion"
+import { LatestJobs } from "@/components/homepage/LatestJobs"
+
 
 export const Home = () => {
     return (
         <>
         <HeroSection />
         <CategoryCarousel />
+        <LatestJobs />
         </>
     )
 }
