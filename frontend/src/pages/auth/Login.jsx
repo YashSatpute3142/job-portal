@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/toast";
 import { loginUser } from "@/api/userApi";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "@/redux/authSlice";
+import { setLoading, setUser } from "@/redux/authSlice";
 import { Loader2 } from "lucide-react";
 
 export const Login = () => {
@@ -50,6 +50,7 @@ export const Login = () => {
         const res = await loginUser(input);
 
         if (res.data.success) {
+            dispatch(setUser(res.data.user))
             toast.add({
                 title: "Success",
                 description: res.data.message,

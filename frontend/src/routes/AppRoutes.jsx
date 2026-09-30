@@ -4,6 +4,7 @@ import { Register } from "@/pages/auth/Register";
 import { Browse } from "@/pages/student/Browse";
 import { Home } from "@/pages/student/Home";
 import { Jobs } from "@/pages/student/Jobs";
+import { Profile } from "@/pages/student/Profile";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path:"/browse",
                 element:<Browse />
+            },
+            {
+                path:"/profile",
+                element:<Profile />
             }
         ],
     },
