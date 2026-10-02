@@ -1,3 +1,4 @@
+import { JobDescription } from "@/components/jobs/JobDescription";
 import MainLayout from "@/components/shared/MainLayout";
 import { Login } from "@/pages/auth/Login";
 import { Register } from "@/pages/auth/Register";
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             {
                 path:"/jobs",
                 element:<Jobs />
+            },
+            {
+                path:"/description/:id",
+                element:<JobDescription />
             },
             {
                 path:"/browse",
