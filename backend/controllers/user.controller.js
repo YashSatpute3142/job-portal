@@ -2,6 +2,8 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { getDataUri } from "../utils/dataUri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
     try {
@@ -22,6 +24,19 @@ export const register = async (req, res) => {
                 success: false
             });
         }
+        const file = req.file;
+
+        // Cloudinary
+        let cloudResponse;
+
+        if (file) {
+            const fileUri = getDataUri(file);
+
+            cloudResponse = await cloudinary.uploader.upload(
+                fileUri.content
+            );
+
+        }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -30,7 +45,10 @@ export const register = async (req, res) => {
             email,
             phoneNumber,
             password: hashedPassword,
-            role
+            role,
+            profile:{
+                profilePhoto:cloudResponse.secure_url,
+            }
         });
 
         return res.status(200).json({
@@ -128,43 +146,72 @@ export const logout = async (req, res) => {
     }
 };
 
+
 export const updateProfile = async (req, res) => {
     try {
         const { fullName, email, phoneNumber, bio, skills } = req.body;
         const file = req.file;
 
-
         // Cloudinary
-       let skillsArray;
-       if(skills){
-           skillsArray = skills.split(",");
-       }
-        
+        let cloudResponse;
 
-        const userId = req.id; // middleware authentication
+        if (file) {
+            const fileUri = getDataUri(file);
+
+            cloudResponse = await cloudinary.uploader.upload(
+                fileUri.content,
+                {
+                    resource_type: "raw",
+                    type: "upload",
+                    access_mode: "public",
+                    format: "pdf",
+                }
+            );
+
+        }
+
+        let skillsArray;
+
+        if (skills) {
+            skillsArray = skills.split(",");
+        }
+
+        console.log("CLOUDINARY UPLOAD DONE");
+
+        const userId = req.id;
+        console.log("USER ID FROM AUTH:", userId);
 
         let user = await User.findById(userId);
+        console.log("USER FOUND:", user);
 
         if (!user) {
+            console.log("USER NOT FOUND");
+
             return res.status(400).json({
                 message: "User not found",
                 success: false,
             });
         }
 
+
         // Updating data
-        if(fullName) user.fullName = fullName;
-        if(email) user.email = email;
-        if(phoneNumber) user.phoneNumber = phoneNumber;
-        if(bio) user.profile.bio = bio;
-        if(skills) user.profile.skills = skillsArray;           
-        
-        
-        
-        
-        
+        if (fullName) user.fullName = fullName;
+        if (email) user.email = email;
+        if (phoneNumber) user.phoneNumber = phoneNumber;
+        if (bio) user.profile.bio = bio;
+        if (skills) user.profile.skills = skillsArray;
+
+        // Resume
+        if (cloudResponse) {
+            user.profile.resume = cloudResponse.secure_url;
+            user.profile.resumeOriginalName = file.originalname;
+        }
+
+        console.log("SAVING USER...");
 
         await user.save();
+
+        console.log("USER SAVED SUCCESSFULLY");
 
         user = {
             _id: user._id,
@@ -175,6 +222,8 @@ export const updateProfile = async (req, res) => {
             profile: user.profile
         };
 
+        console.log("SENDING SUCCESS RESPONSE");
+
         return res.status(200).json({
             message: "Profile updated successfully",
             user,
@@ -182,7 +231,14 @@ export const updateProfile = async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
+        console.error("UPDATE PROFILE ERROR:", error);
+
+        return res.status(500).json({
+            message: "Something went wrong while updating profile",
+            success: false,
+        });
     }
 };
+
+
 

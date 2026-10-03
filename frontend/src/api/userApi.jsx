@@ -26,3 +26,25 @@ export const loginUser = async (input) => {
         }
     );
 };
+
+export const updateProile = async (formData) => {
+    return await axios.post(
+        `${USER_API_END_POINT}/profile/update`,
+        formData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true,
+        }
+    );
+};
+
+export  const  logoutUser = async () => {
+    return await axios.get(
+        `${USER_API_END_POINT}/logout`,
+        {
+            withCredentials:true
+        }
+    )
+}

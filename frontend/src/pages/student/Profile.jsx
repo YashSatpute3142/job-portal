@@ -6,12 +6,16 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Contact, Mail, Pen } from "lucide-react"
 import { useState } from "react"
+import { useSelector } from "react-redux"
 
-const skills = ["html", "css", "js", "react", "node", "express"]
+
 const isResume = true;
 
 export const Profile = () => {
     const [open , setOpen] = useState(false);
+    const {user} = useSelector(store=>store.auth);
+    const{fullName,email,phoneNumber,profile} = user
+
     return (
         <div>
             <div className="max-w-7xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8">
@@ -24,8 +28,8 @@ export const Profile = () => {
 
                         </Avatar>
                         <div>
-                            <h1 className="font-medium text-xl">Full Name</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam a in reiciendis.</p>
+                            <h1 className="font-medium text-xl">{fullName}</h1>
+                            <p>{profile.bio}</p>
                         </div>
 
                     </div>
@@ -34,18 +38,18 @@ export const Profile = () => {
                 <div className="my-5">
                     <div className="flex items-center gap-3 my-2">
                         <Mail />
-                        <span>yash@mail.com</span>
+                        <span>{email}</span>
                     </div>
                     <div className="flex items-center gap-3 my-2">
                         <Contact/>
-                        <span>89674523</span>
+                        <span>{phoneNumber}</span>
                     </div>
                 </div>
                 <div className="my-5">
                     <h1>Skills</h1>
                     <div className="flex items-center gap-1">
                         {
-                           skills.length !== 0 ? skills.map((item,index) => <Badge>{item}</Badge>) :  <span>DO work Man</span>
+                           profile?.skills.length !== 0 ? profile?.skills.map((item,index) => <Badge>{item}</Badge>) :  <span>DO work Man</span>
                         }
                     </div>
                     
@@ -53,7 +57,7 @@ export const Profile = () => {
                 <div className="grid w-full max-w-sm items-center gap-1.5">
                     <Label className="text-md font -bold">Resume</Label>
                     {
-                        isResume ? <a href="https://chatgpt.com/" target="blank" className="text-blue-500 hover:underline cursor-pointer">Yash Satpute</a> : <span>NA</span>
+                        isResume ? <a href={profile?.resume} target="blank" className="text-blue-500 hover:underline cursor-pointer">{profile?.resumeOriginalName}</a> : <span>NA</span>
                     }
                 </div>
                 
