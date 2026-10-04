@@ -1,9 +1,32 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers,configureStore } from "@reduxjs/toolkit"
 import authSlice from "./authSlice"
+import jobSlice from "./jobSlice"
+import { persistReducer,FLUSH,REHYDRATE,PAUSE,PERSIST,PURGE,REGISTER } from "redux-persist"
+import storageModule from "redux-persist/lib/storage/index.js"
+
+const storage = storageModule.default
+
+const persistConfig = {
+    key:"root",
+    version:1,
+    storage
+}
+
+const rootReducer = combineReducers({
+    auth:authSlice,
+    job:jobSlice
+})
+
+const persistedReducer = persistReducer(persistConfig,rootReducer)
 
 const store = configureStore({
-    reducer:{
-        auth: authSlice
-    }
+    reducer:persistedReducer,
+    middleware:(getDefaultMiddleware)=>
+        getDefaultMiddleware({
+            serializableCheck:{
+                ignoredActions:[FLUSH,REHYDRATE,PAUSE,PERSIST,PURGE,REGISTER]
+            }
+        })
 })
-export default store;
+
+export default store
