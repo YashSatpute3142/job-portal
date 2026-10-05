@@ -1,5 +1,6 @@
 import { JobDescription } from "@/components/jobs/JobDescription";
 import MainLayout from "@/components/shared/MainLayout";
+import { Companies } from "@/pages/admin/Companies";
 import { Login } from "@/pages/auth/Login";
 import { Register } from "@/pages/auth/Register";
 import { Browse } from "@/pages/student/Browse";
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path:"/profile",
                 element:<Profile />
+            },
+            {
+                path:"/admin/companies",
+                element:<Companies />
             }
         ],
     },
