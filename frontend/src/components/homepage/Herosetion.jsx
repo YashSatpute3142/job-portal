@@ -16,6 +16,7 @@ const MAX_REVEALS = 16;
 const EMPTY_MASK = "linear-gradient(transparent, transparent)";
 
 const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 const QUICK_SEARCHES = ["Remote", "Design", "Engineering", "Marketing"];
 
