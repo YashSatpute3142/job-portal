@@ -1,3 +1,4 @@
+import { CompanyCreate } from "@/components/company/CompanyCreate";
 import { JobDescription } from "@/components/jobs/JobDescription";
 import MainLayout from "@/components/shared/MainLayout";
 import { Companies } from "@/pages/admin/Companies";
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path:"/admin/companies",
                 element:<Companies />
+            },
+            {
+                path:"/admin/companies/create",
+                element:<CompanyCreate />
             }
         ],
     },

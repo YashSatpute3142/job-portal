@@ -1,8 +1,10 @@
 import { CompanyTable } from "@/components/company/CompanyTable"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useNavigate } from "react-router-dom"
 
 export const Companies = () => {
+    const navigate = useNavigate()
     return(
         <div>
             <div className="max-w-6xl mx-auto my-10">
@@ -11,7 +13,7 @@ export const Companies = () => {
                     className="w-fit"
                     placeholder="Filter By Name" 
                     />
-                    <Button className="bg-black text-white p-5">New Company</Button>
+                    <Button onClick={() => navigate("/admin/companies/create")} className="bg-black text-white p-5">New Company</Button>
                 </div>
                 <CompanyTable />
             </div>
