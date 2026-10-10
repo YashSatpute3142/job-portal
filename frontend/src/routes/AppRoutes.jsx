@@ -2,6 +2,7 @@ import { CompanyCreate } from "@/components/company/CompanyCreate";
 import { JobDescription } from "@/components/jobs/JobDescription";
 import MainLayout from "@/components/shared/MainLayout";
 import { Companies } from "@/pages/admin/Companies";
+import { CompanySetup } from "@/pages/admin/CompanySetup";
 import { Login } from "@/pages/auth/Login";
 import { Register } from "@/pages/auth/Register";
 import { Browse } from "@/pages/student/Browse";
@@ -50,6 +51,11 @@ const router = createBrowserRouter([
             {
                 path:"/admin/companies/create",
                 element:<CompanyCreate />
+            }
+            ,
+            {
+                path:"/admin/companies/:id",
+                element:<CompanySetup />
             }
         ],
     },
