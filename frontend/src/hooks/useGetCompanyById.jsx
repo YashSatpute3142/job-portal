@@ -1,3 +1,4 @@
+import { getCompanyById } from "@/api/companyApi"
 import { setSingleCompany } from "@/redux/companySlice"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
