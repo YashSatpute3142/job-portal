@@ -18,3 +18,12 @@ export const getSingleJob = async(jobId) => {
         }
     )
 }
+
+export const getAllAdminJobs = async() => {
+    return await axios.get(
+        `${JOB_API_END_POINT}/getadminjobs`,
+        {
+            withCredentials:true
+        }
+    )
+}
