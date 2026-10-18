@@ -27,3 +27,16 @@ export const getAllAdminJobs = async() => {
         }
     )
 }
+
+export const postAdminJob =  async(input) => {
+    return await axios.post(
+        `${JOB_API_END_POINT}/post`,
+        input,
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        }
+    )
+}

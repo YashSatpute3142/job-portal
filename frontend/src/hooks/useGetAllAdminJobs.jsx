@@ -10,7 +10,6 @@ export const useGetAllAdminJobs = () => {
         const fetchAllAdminJobs = async () => {
             try {
                 const res = await getAllAdminJobs()
-                console.log("ADMIN JOBS RESPONSE:", res.data)
                 
                 if (res.data.success) {
                     

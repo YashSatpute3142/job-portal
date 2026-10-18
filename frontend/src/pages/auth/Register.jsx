@@ -95,14 +95,18 @@ export const Register = () => {
     }
 };
 
-    return (
-        <div className="w-full">
-            <div className="max-w-6xl mx-auto px-6 mt-12 mb-8">
-                <div className="flex items-center gap-16">
+    const inputClass =
+        "h-11 rounded-lg border-gray-200 bg-white focus-visible:border-[#6A38C2] focus-visible:ring-2 focus-visible:ring-[#6A38C2]/30 focus-visible:ring-offset-0"
+    const labelClass = "mb-2 block text-sm font-medium text-gray-700"
 
-                    <div className="w-1/2 flex items-center justify-center">
+    return (
+        <div className="min-h-[calc(100vh-4rem)] w-full bg-gradient-to-b from-[#6A38C2]/5 via-gray-50 to-gray-50">
+            <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+                <div className="flex items-center gap-12 lg:gap-16">
+
+                    <div className="hidden w-1/2 items-center justify-center lg:flex">
                         <div
-                            className="relative w-full max-w-md overflow-hidden"
+                            className="relative w-full max-w-md cursor-crosshair overflow-hidden rounded-3xl border border-gray-200 bg-white p-4 shadow-xl shadow-[#6A38C2]/10"
                             onMouseMove={handleMouseMove}
                             onMouseEnter={() => setIsHovering(true)}
                             onMouseLeave={() => setIsHovering(false)}
@@ -116,7 +120,7 @@ export const Register = () => {
                             <img
                                 src="/assets/signup-color.png"
                                 alt="Sign Up"
-                                className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                                className="pointer-events-none absolute inset-0 h-full w-full object-contain p-4"
                                 style={{
                                     clipPath: isHovering
                                         ? `circle(100px at ${mousePosition.x}px ${mousePosition.y}px)`
@@ -126,19 +130,25 @@ export const Register = () => {
                         </div>
                     </div>
 
-                    <div className="w-1/2">
+                    <div className="mx-auto w-full max-w-md lg:w-1/2 lg:max-w-none">
                         <form
                             onSubmit={submitHamdler}
-                            className="w-full border border-gray-200 rounded-md p-6"
+                            className="w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-xl shadow-gray-200/60 sm:p-8"
                         >
-                            <h1 className="font-bold text-2xl mb-6">
+                            <span className="mb-4 inline-block rounded-full border border-gray-200 bg-gray-50 px-4 py-1.5 text-sm font-medium text-[#6A38C2]">
+                                Join JobPortal
+                            </span>
+                            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                                 Sign Up
                             </h1>
+                            <p className="mb-8 mt-2 text-sm text-gray-500">
+                                Create your account to start applying or hiring in just a few steps.
+                            </p>
 
-                            <div className="mb-4">
+                            <div className="mb-5">
                                 <Label
                                     htmlFor="fullName"
-                                    className="block mb-2"
+                                    className={labelClass}
                                 >
                                     Full Name
                                 </Label>
@@ -148,51 +158,56 @@ export const Register = () => {
                                     name="fullName"
                                     type="text"
                                     placeholder="Enter Full Name"
+                                    className={inputClass}
                                     value={input.fullName}
                                     onChange={changeEventHandler}
                                 />
                             </div>
 
-                            <div className="mb-4">
-                                <Label
-                                    htmlFor="email"
-                                    className="block mb-2"
-                                >
-                                    Email
-                                </Label>
+                            <div className="mb-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                                <div>
+                                    <Label
+                                        htmlFor="email"
+                                        className={labelClass}
+                                    >
+                                        Email
+                                    </Label>
 
-                                <Input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    placeholder="xyz@gmail.com"
-                                    value={input.email}
-                                    onChange={changeEventHandler}
-                                />
+                                    <Input
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        placeholder="xyz@gmail.com"
+                                        className={inputClass}
+                                        value={input.email}
+                                        onChange={changeEventHandler}
+                                    />
+                                </div>
+
+                                <div>
+                                    <Label
+                                        htmlFor="phoneNumber"
+                                        className={labelClass}
+                                    >
+                                        Phone Number
+                                    </Label>
+
+                                    <Input
+                                        id="phoneNumber"
+                                        name="phoneNumber"
+                                        type="text"
+                                        placeholder="Enter phone no"
+                                        className={inputClass}
+                                        value={input.phoneNumber}
+                                        onChange={changeEventHandler}
+                                    />
+                                </div>
                             </div>
 
-                            <div className="mb-4">
-                                <Label
-                                    htmlFor="phoneNumber"
-                                    className="block mb-2"
-                                >
-                                    Phone Number
-                                </Label>
-
-                                <Input
-                                    id="phoneNumber"
-                                    name="phoneNumber"
-                                    type="text"
-                                    placeholder="Enter phone no"
-                                    value={input.phoneNumber}
-                                    onChange={changeEventHandler}
-                                />
-                            </div>
-
-                            <div className="mb-4">
+                            <div className="mb-5">
                                 <Label
                                     htmlFor="password"
-                                    className="block mb-2"
+                                    className={labelClass}
                                 >
                                     Password
                                 </Label>
@@ -202,23 +217,30 @@ export const Register = () => {
                                     name="password"
                                     type="password"
                                     placeholder="Enter password"
+                                    className={inputClass}
                                     value={input.password}
                                     onChange={changeEventHandler}
                                 />
                             </div>
 
-                            <div className="flex items-center justify-between mb-6">
-                                <div className="flex items-center gap-4">
-                                    <Label>
-                                        Role
-                                    </Label>
+                            <div className="mb-5">
+                                <Label className="mb-3 block text-sm font-medium text-gray-700">
+                                    Role
+                                </Label>
 
-                                    <label className="flex items-center gap-2 cursor-pointer">
+                                <div className="grid grid-cols-2 gap-3">
+                                    <label
+                                        className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-colors ${
+                                            input.role === "student"
+                                                ? "border-[#6A38C2] bg-[#6A38C2]/5 text-[#6A38C2]"
+                                                : "border-gray-200 text-gray-700 hover:border-[#6A38C2]/40 hover:bg-gray-50"
+                                        }`}
+                                    >
                                         <input
                                             type="radio"
                                             name="role"
                                             value="student"
-                                            className="w-4 h-4 cursor-pointer"
+                                            className="h-4 w-4 cursor-pointer accent-[#6A38C2]"
                                             checked={input.role === "student"}
                                             onChange={changeEventHandler}
                                         />
@@ -228,12 +250,18 @@ export const Register = () => {
                                         </span>
                                     </label>
 
-                                    <label className="flex items-center gap-2 cursor-pointer">
+                                    <label
+                                        className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-colors ${
+                                            input.role === "recruiter"
+                                                ? "border-[#6A38C2] bg-[#6A38C2]/5 text-[#6A38C2]"
+                                                : "border-gray-200 text-gray-700 hover:border-[#6A38C2]/40 hover:bg-gray-50"
+                                        }`}
+                                    >
                                         <input
                                             type="radio"
                                             name="role"
                                             value="recruiter"
-                                            className="w-4 h-4 cursor-pointer"
+                                            className="h-4 w-4 cursor-pointer accent-[#6A38C2]"
                                             checked={input.role === "recruiter"}
                                             onChange={changeEventHandler}
                                         />
@@ -243,38 +271,38 @@ export const Register = () => {
                                         </span>
                                     </label>
                                 </div>
+                            </div>
 
-                                <div className="flex items-center gap-3">
-                                    <Label htmlFor="profile">
-                                        Profile
-                                    </Label>
+                            <div className="mb-8">
+                                <Label htmlFor="profile" className={labelClass}>
+                                    Profile Photo
+                                </Label>
 
-                                    <Input
-                                        id="profile"
-                                        name="profile"
-                                        type="file"
-                                        accept="image/*"
-                                        className="cursor-pointer"
-                                        onChange={changeFileHandler}
-                                    />
-                                </div>
+                                <Input
+                                    id="profile"
+                                    name="profile"
+                                    type="file"
+                                    accept="image/*"
+                                    className="block h-auto w-full cursor-pointer rounded-lg border-gray-200 bg-white py-2 pl-2 pr-3 text-sm text-gray-500 file:mr-3 file:h-9 file:cursor-pointer file:rounded-full file:border-0 file:bg-[#6A38C2] file:px-4 file:py-0 file:text-sm file:font-medium file:leading-9 file:text-white hover:file:bg-[#5b2fb0] focus-visible:border-[#6A38C2] focus-visible:ring-2 focus-visible:ring-[#6A38C2]/30 focus-visible:ring-offset-0"
+                                    onChange={changeFileHandler}
+                                />
                             </div>
 
                             {
-                                loading ? <Button className="w-full my-4"> <Loader2 className="r-2 h-4 w-4 animate-spin" />Please wait</Button>: <Button
+                                loading ? <Button className="h-11 w-full cursor-not-allowed rounded-full bg-[#6A38C2]/70 text-white"> <Loader2 className="mr-2 h-4 w-4 animate-spin" />Please wait</Button>: <Button
                                 type="submit"
-                                className="w-full bg-black text-white hover:bg-gray-800"
+                                className="h-11 w-full rounded-full bg-[#6A38C2] text-white shadow-lg shadow-[#6A38C2]/25 transition hover:bg-[#5b2fb0] focus-visible:ring-2 focus-visible:ring-[#6A38C2]/40 active:scale-95"
                             >
                                 Sign Up
                             </Button>
                             }
 
-                            <div className="mt-5 text-sm">
+                            <div className="mt-6 text-center text-sm text-gray-500">
                                 Already have account?{" "}
 
                                 <Link
                                     to="/login"
-                                    className="text-blue-600 hover:underline"
+                                    className="font-semibold text-[#6A38C2] hover:underline"
                                 >
                                     Login
                                 </Link>

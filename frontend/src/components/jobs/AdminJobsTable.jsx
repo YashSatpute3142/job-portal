@@ -1,5 +1,5 @@
 
-import { BriefcaseBusiness, Edit2, MoreHorizontal, SearchX } from "lucide-react"
+import { BriefcaseBusiness, Edit2, Eye, MoreHorizontal, SearchX } from "lucide-react"
 import { Avatar, AvatarImage } from "../ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
@@ -110,6 +110,13 @@ export const AdminJobsTable = () => {
                                                 >
                                                     <Edit2 className="h-4 w-4" />
                                                     <span>Edit</span>
+                                                </div>
+                                                <div
+                                                    onClick={() => navigate(`/admin/jobs/${job._id}/applicants`)}
+                                                    className="flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-[#6A38C2]/10 hover:text-[#6A38C2]"
+                                                >
+                                                    <Eye />
+                                                    <span>Applicants</span>
                                                 </div>
                                             </PopoverContent>
                                         </Popover>

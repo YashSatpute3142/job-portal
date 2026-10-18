@@ -15,6 +15,8 @@ import { Profile } from "@/pages/student/Profile";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import GuestRoute from "./GuestRoute";
+import { Applicants } from "@/pages/admin/Applicants";
+
 
 const router = createBrowserRouter([
     {
@@ -76,6 +78,11 @@ const router = createBrowserRouter([
                     {
                         path: "/admin/jobs/create",
                         element: <PostJob />,
+                    },
+                    ,
+                    {
+                        path: "/admin/jobs/:id/applicants",
+                        element: <Applicants />,
                     },
                 ],
             },

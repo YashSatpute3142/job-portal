@@ -73,12 +73,12 @@ export const Login = () => {
     }
 };
     return (
-        <div className="w-full">
-            <div className="max-w-6xl mx-auto px-6 mt-12 mb-8">
-                <div className="flex items-center gap-16">
-                    <div className="w-1/2 flex items-center justify-center">
+        <div className="min-h-[calc(100vh-4rem)] w-full bg-gradient-to-b from-[#6A38C2]/5 via-gray-50 to-gray-50">
+            <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+                <div className="flex items-center gap-12 lg:gap-16">
+                    <div className="hidden w-1/2 items-center justify-center lg:flex">
                         <div
-                            className="relative w-full max-w-md overflow-hidden"
+                            className="relative w-full max-w-md cursor-crosshair overflow-hidden rounded-3xl border border-gray-200 bg-white p-4 shadow-xl shadow-[#6A38C2]/10"
                             onMouseMove={handleMouseMove}
                             onMouseEnter={() => setIsHovering(true)}
                             onMouseLeave={() => setIsHovering(false)}
@@ -92,7 +92,7 @@ export const Login = () => {
                             <img
                                 src="/assets/signup-color.png"
                                 alt="Sign Up"
-                                className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                                className="pointer-events-none absolute inset-0 h-full w-full object-contain p-4"
                                 style={{
                                     clipPath: isHovering
                                         ? `circle(100px at ${mousePosition.x}px ${mousePosition.y}px)`
@@ -102,19 +102,25 @@ export const Login = () => {
                         </div>
                     </div>
 
-                    <div className="w-1/2">
+                    <div className="mx-auto w-full max-w-md lg:w-1/2 lg:max-w-none">
                         <form
                             onSubmit={submitHamdler}
-                            className="w-full border border-gray-200 rounded-md p-6"
+                            className="w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-xl shadow-gray-200/60 sm:p-8"
                         >
-                            <h1 className="font-bold text-2xl mb-6">
+                            <span className="mb-4 inline-block rounded-full border border-gray-200 bg-gray-50 px-4 py-1.5 text-sm font-medium text-[#6A38C2]">
+                                Welcome back
+                            </span>
+                            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                                 Login
                             </h1>
+                            <p className="mb-8 mt-2 text-sm text-gray-500">
+                                Sign in to continue searching and applying for your dream jobs.
+                            </p>
 
-                            <div className="mb-4">
+                            <div className="mb-5">
                                 <Label
                                     htmlFor="email"
-                                    className="block mb-2"
+                                    className="mb-2 block text-sm font-medium text-gray-700"
                                 >
                                     Email
                                 </Label>
@@ -124,15 +130,16 @@ export const Login = () => {
                                     name="email"
                                     type="email"
                                     placeholder="xyz@gmail.com"
+                                    className="h-11 rounded-lg border-gray-200 bg-white focus-visible:border-[#6A38C2] focus-visible:ring-2 focus-visible:ring-[#6A38C2]/30 focus-visible:ring-offset-0"
                                     value={input.email}
                                     onChange={changeEventHandler}
                                 />
                             </div>
 
-                            <div className="mb-4">
+                            <div className="mb-5">
                                 <Label
                                     htmlFor="password"
-                                    className="block mb-2"
+                                    className="mb-2 block text-sm font-medium text-gray-700"
                                 >
                                     Password
                                 </Label>
@@ -142,23 +149,30 @@ export const Login = () => {
                                     name="password"
                                     type="password"
                                     placeholder="Enter password"
+                                    className="h-11 rounded-lg border-gray-200 bg-white focus-visible:border-[#6A38C2] focus-visible:ring-2 focus-visible:ring-[#6A38C2]/30 focus-visible:ring-offset-0"
                                     value={input.password}
                                     onChange={changeEventHandler}
                                 />
                             </div>
 
-                            <div className="flex items-center justify-between mb-6">
-                                <div className="flex items-center gap-4">
-                                    <Label>
-                                        Role
-                                    </Label>
+                            <div className="mb-8">
+                                <Label className="mb-3 block text-sm font-medium text-gray-700">
+                                    Role
+                                </Label>
 
-                                    <label className="flex items-center gap-2 cursor-pointer">
+                                <div className="grid grid-cols-2 gap-3">
+                                    <label
+                                        className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-colors ${
+                                            input.role === "student"
+                                                ? "border-[#6A38C2] bg-[#6A38C2]/5 text-[#6A38C2]"
+                                                : "border-gray-200 text-gray-700 hover:border-[#6A38C2]/40 hover:bg-gray-50"
+                                        }`}
+                                    >
                                         <input
                                             type="radio"
                                             name="role"
                                             value="student"
-                                            className="w-4 h-4 cursor-pointer"
+                                            className="h-4 w-4 cursor-pointer accent-[#6A38C2]"
                                             checked={input.role === "student"}
                                             onChange={changeEventHandler}
                                         />
@@ -168,12 +182,18 @@ export const Login = () => {
                                         </span>
                                     </label>
 
-                                    <label className="flex items-center gap-2 cursor-pointer">
+                                    <label
+                                        className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-colors ${
+                                            input.role === "recruiter"
+                                                ? "border-[#6A38C2] bg-[#6A38C2]/5 text-[#6A38C2]"
+                                                : "border-gray-200 text-gray-700 hover:border-[#6A38C2]/40 hover:bg-gray-50"
+                                        }`}
+                                    >
                                         <input
                                             type="radio"
                                             name="role"
                                             value="recruiter"
-                                            className="w-4 h-4 cursor-pointer"
+                                            className="h-4 w-4 cursor-pointer accent-[#6A38C2]"
                                             checked={input.role === "recruiter"}
                                             onChange={changeEventHandler}
                                         />
@@ -185,21 +205,21 @@ export const Login = () => {
                                 </div>
                             </div>
                             {
-                             loading ? <button className="m-full my-4"> <Loader2 className="mr-2 h-4 w-4 animate-spin" />Please wait </button> : <Button
+                             loading ? <button className="flex h-11 w-full cursor-not-allowed items-center justify-center rounded-full bg-[#6A38C2]/70 font-medium text-white"> <Loader2 className="mr-2 h-4 w-4 animate-spin" />Please wait </button> : <Button
                                 type="submit"
-                                className="w-full bg-black text-white hover:bg-gray-800"
+                                className="h-11 w-full rounded-full bg-[#6A38C2] text-white shadow-lg shadow-[#6A38C2]/25 transition hover:bg-[#5b2fb0] focus-visible:ring-2 focus-visible:ring-[#6A38C2]/40 active:scale-95"
                             >
                                 Login
                             </Button>
                             }
-                            
 
-                            <div className="mt-5 text-sm">
+
+                            <div className="mt-6 text-center text-sm text-gray-500">
                                 Don't have account?{" "}
 
                                 <Link
                                     to="/signup"
-                                    className="text-blue-600 hover:underline"
+                                    className="font-semibold text-[#6A38C2] hover:underline"
                                 >
                                     Signup
                                 </Link>
