@@ -25,3 +25,12 @@ export const setStatus = async({status, id}) => {
         }
     )
 }
+
+export const getAppiedJobs = async() => {
+    return await axios.get(
+        `${APPLICATION_API_END_POINT}/get`,
+        {
+            withCredentials:true
+        }
+    )
+}

@@ -1,6 +1,9 @@
 import { SlidersHorizontal } from "lucide-react"
 import { Label } from "../ui/label"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { setSearchedQuery } from "@/redux/jobSlice"
 
 const filterData = [
     {
@@ -18,6 +21,16 @@ const filterData = [
 ]
 
 export const FilterCard = () => {
+    const [selectedValue, setSelectedValue] = useState("");
+    const dispatch = useDispatch()
+
+    const changeHandleChange = (value) => {
+        setSelectedValue(value)
+    }
+    useEffect(() => {
+        dispatch(setSearchedQuery(selectedValue))
+        
+    },[selectedValue])
 
     return(
         <div className="w-full rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
@@ -28,20 +41,21 @@ export const FilterCard = () => {
                 <h1 className="text-lg font-bold text-gray-900">Filter Jobs</h1>
             </div>
             <hr className="mt-4 border-gray-100" />
-            <RadioGroup className="mt-4 gap-6">
+            <RadioGroup value={selectedValue} onValueChange={changeHandleChange} className="mt-4 gap-6">
                 {
                     filterData.map((data, index) => (
                         <div key={index}>
                             <h1 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#6A38C2]">{data.filterType}</h1>
                             {
                                 data.array.map((item, idx) => {
+                                    const itemId = `r${index}-${idx}`
                                     return (
                                         <div
                                             key={idx}
                                             className="my-1 flex items-center space-x-3 rounded-lg px-2 py-2 transition-colors hover:bg-[#6A38C2]/5"
                                         >
-                                            <RadioGroupItem value={item} className="border-gray-300 text-[#6A38C2] focus-visible:ring-[#6A38C2]/40" />
-                                            <Label className="cursor-pointer text-sm font-normal text-gray-700">{item}</Label>
+                                            <RadioGroupItem value={item} id={itemId} className="border-gray-300 text-[#6A38C2] focus-visible:ring-[#6A38C2]/40" />
+                                            <Label htmlFor={itemId} className="cursor-pointer text-sm font-normal text-gray-700">{item}</Label>
                                         </div>
                                     )
                                 })

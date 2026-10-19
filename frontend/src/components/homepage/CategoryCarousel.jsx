@@ -1,3 +1,4 @@
+import { setSearchedQuery } from "@/redux/jobSlice";
 import {
     Carousel,
     CarouselContent,
@@ -16,6 +17,8 @@ import {
     PenTool,
     Server
 } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
     { name: "Frontend Developer", icon: Monitor },
@@ -32,6 +35,12 @@ const arrowStyles =
     "size-10 border-gray-200 bg-white text-gray-700 shadow-sm transition-all duration-300 hover:border-[#6A38C2] hover:bg-[#6A38C2] hover:text-white";
 
 export const CategoryCarousel = ({ onSelect }) => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const SearchJobHandler = (query) => {
+            dispatch(setSearchedQuery(query))
+            navigate("/browse")
+    }
     return (
         <section className="bg-white px-6 py-20">
             <div className="mx-auto max-w-6xl">
@@ -57,7 +66,7 @@ export const CategoryCarousel = ({ onSelect }) => {
                                 >
                                     <button
                                         type="button"
-                                        onClick={() => onSelect?.(name)}
+                                        onClick={() => SearchJobHandler(name)}
                                         className="group relative flex h-full w-full cursor-pointer flex-col items-start gap-6 overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 text-left shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-[#6A38C2]/40 hover:shadow-xl hover:shadow-[#6A38C2]/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6A38C2]"
                                     >
                                         <span

@@ -1,4 +1,3 @@
-
 import { BriefcaseBusiness, Edit2, Eye, MoreHorizontal, SearchX } from "lucide-react"
 import { Avatar, AvatarImage } from "../ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
@@ -92,18 +91,18 @@ export const AdminJobsTable = () => {
                                         </div>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 sm:px-6">
-                                        <div className="font-medium text-gray-900">{jobTitle}</div>
+                                        <div className="font-semibold text-gray-900">{jobTitle}</div>
                                         <div className="text-xs text-gray-500 sm:hidden">{formatDate(job?.createdAt)}</div>
                                     </TableCell>
-                                    <TableCell className="hidden px-4 py-3 text-sm text-gray-600 sm:table-cell sm:px-6">
-                                        {formatDate(job?.createdAt)}
+                                    <TableCell className="hidden px-4 py-3 sm:table-cell sm:px-6">
+                                        <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">{formatDate(job?.createdAt)}</span>
                                     </TableCell>
                                     <TableCell className="px-4 py-3 text-right sm:px-6">
                                         <Popover>
                                             <PopoverTrigger className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6A38C2]/40">
                                                 <MoreHorizontal className="h-5 w-5" />
                                             </PopoverTrigger>
-                                            <PopoverContent className="w-36 rounded-lg border border-gray-200 bg-white p-1.5 shadow-lg">
+                                            <PopoverContent className="z-50 w-40 rounded-xl border border-gray-200 bg-white p-1.5 opacity-100 shadow-xl">
                                                 <div
                                                     onClick={() => navigate(`/admin/jobs/${job._id}`)}
                                                     className="flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-[#6A38C2]/10 hover:text-[#6A38C2]"
@@ -115,7 +114,7 @@ export const AdminJobsTable = () => {
                                                     onClick={() => navigate(`/admin/jobs/${job._id}/applicants`)}
                                                     className="flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-[#6A38C2]/10 hover:text-[#6A38C2]"
                                                 >
-                                                    <Eye />
+                                                    <Eye className="h-4 w-4" />
                                                     <span>Applicants</span>
                                                 </div>
                                             </PopoverContent>

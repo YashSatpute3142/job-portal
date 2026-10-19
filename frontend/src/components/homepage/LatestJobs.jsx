@@ -22,7 +22,7 @@ export const LatestJobs = () => {
                     <>
                         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                             {allJobs.slice(0, 6).map((job) => (
-                                <LatestJobCards key={job._id} job={job} />
+                                <LatestJobCards key={job._id} job={job}  />
                             ))}
                         </div>
                         <div className="mt-12 flex justify-center">

@@ -1,5 +1,6 @@
 import { MapPin } from "lucide-react"
 import { Badge } from "../ui/badge"
+import { useNavigate } from "react-router-dom"
 
 const formatSalary = (salary) => {
     const monthly = Number(salary)
@@ -11,8 +12,9 @@ export const LatestJobCards = ({ job }) => {
     const { company, title, description, position, jobType, salary, location } = job
     const companyName = company?.name || "Company"
     const salaryLabel = formatSalary(salary)
+    const navigate = useNavigate()
     return (
-        <div className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-[#6A38C2]/40 hover:shadow-xl hover:shadow-[#6A38C2]/15">
+        <div onClick={() => navigate(`/description/${job._id}`)} className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-[#6A38C2]/40 hover:shadow-xl hover:shadow-[#6A38C2]/15">
             <span
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-[#6A38C2] transition-transform duration-500 group-hover:scale-x-100"

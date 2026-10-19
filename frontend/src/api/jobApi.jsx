@@ -1,9 +1,9 @@
 import { JOB_API_END_POINT } from "@/utils/constant"
 import axios from "axios"
 
-export const getAllJobs = async() => {
+export const getAllJobs = async(searchedQuery) => {
     return await axios.get(
-        `${JOB_API_END_POINT}/get`,
+        `${JOB_API_END_POINT}/get?keyword=${searchedQuery}`,
         {
             withCredentials:true
         }

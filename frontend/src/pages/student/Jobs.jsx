@@ -2,11 +2,27 @@ import { FilterCard } from "@/components/jobs/FilterCard"
 import { Job } from "@/components/jobs/Job"
 import { useGetAllJobs } from "@/hooks/useGetAllJobs"
 import { space } from "postcss/lib/list"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 
 export const Jobs = () => {
     useGetAllJobs()
-    const {allJobs} = useSelector(store=>store.job)
+    const {allJobs, searchedQuery} = useSelector(store=>store.job)
+    const [filterJobs, setFilterJobs] = useState(allJobs);
+
+    useEffect(() => {
+        if (searchedQuery) {
+            const filteredJobs = allJobs.filter((job) => {
+                return job.title.toLowerCase().includes(searchedQuery.toLowerCase()) ||
+                job.description.toLowerCase().includes(searchedQuery.toLowerCase()) ||
+                job.location.toLowerCase().includes(searchedQuery.toLowerCase())
+            })
+            setFilterJobs(filteredJobs)
+            
+        } else {
+            setFilterJobs(allJobs)
+        }
+    },[allJobs, searchedQuery])
     return(
         <div className="max-w-7xl mx-auto mt-5">
             <div className="flex gap-5">
@@ -15,11 +31,11 @@ export const Jobs = () => {
                 </div>
                 
                {
-                 !allJobs || allJobs.length === 0 ? <span>Job not Found</span> : (
+                 !filterJobs || filterJobs.length === 0 ? <span>Job not Found</span> : (
                     <div className="flex-1 h-[88vh] overflow-y-auto pb-5">
                         <div className="grid grid-cols-3 gap-4">
                             {
-                                allJobs.map((job) => (
+                                filterJobs.map((job) => (
                                     <div key={job._id}>
                                         <Job job = {job}/>
                                     </div>
