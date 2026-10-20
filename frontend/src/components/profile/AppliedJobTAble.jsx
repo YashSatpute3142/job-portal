@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import { useSelector } from "react-redux";
 import { Badge } from "../ui/badge";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
@@ -11,6 +12,8 @@ const statusClass = (status) => {
     if (value === "rejected") return "border border-red-200 bg-red-50 text-red-600 hover:bg-red-50"
     return "border border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-50"
 }
+
+const MotionRow = motion.create(TableRow)
 
 export const AppliedJObTable = () => {
     const { allApliedJobs } = useSelector(store => store.job)
@@ -39,8 +42,11 @@ export const AppliedJObTable = () => {
                                     <p className="mt-1 text-sm text-gray-500">Jobs you apply for will show up here.</p>
                                 </TableCell>
                             </TableRow> :
-                            allApliedJobs.map((appliedJob) => (
-                                <TableRow
+                            allApliedJobs.map((appliedJob, index) => (
+                                <MotionRow
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3, delay: Math.min(index, 10) * 0.04 }}
                                     key={appliedJob._id}
                                     className="border-b border-gray-100 transition-colors last:border-0 hover:bg-gray-50/80"
                                 >
@@ -56,7 +62,7 @@ export const AppliedJObTable = () => {
                                             {appliedJob.status || "Pending"}
                                         </Badge>
                                     </TableCell>
-                                </TableRow>
+                                </MotionRow>
                             ))
                     }
                 </TableBody>

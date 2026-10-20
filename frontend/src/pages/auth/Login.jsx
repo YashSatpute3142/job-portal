@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { easeOut } from "@/lib/motion";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -77,7 +79,10 @@ export const Login = () => {
             <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
                 <div className="flex items-center gap-12 lg:gap-16">
                     <div className="hidden w-1/2 items-center justify-center lg:flex">
-                        <div
+                        <motion.div
+                            initial={{ opacity: 0, x: -40 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.7, ease: easeOut }}
                             className="relative w-full max-w-md cursor-crosshair overflow-hidden rounded-3xl border border-gray-200 bg-white p-4 shadow-xl shadow-[#6A38C2]/10"
                             onMouseMove={handleMouseMove}
                             onMouseEnter={() => setIsHovering(true)}
@@ -99,11 +104,14 @@ export const Login = () => {
                                         : "circle(0px at 0px 0px)",
                                 }}
                             />
-                        </div>
+                        </motion.div>
                     </div>
 
                     <div className="mx-auto w-full max-w-md lg:w-1/2 lg:max-w-none">
-                        <form
+                        <motion.form
+                            initial={{ opacity: 0, y: 28 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.1, ease: easeOut }}
                             onSubmit={submitHamdler}
                             className="w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-xl shadow-gray-200/60 sm:p-8"
                         >
@@ -161,7 +169,9 @@ export const Login = () => {
                                 </Label>
 
                                 <div className="grid grid-cols-2 gap-3">
-                                    <label
+                                    <motion.label
+                                        whileHover={{ y: -2 }}
+                                        whileTap={{ scale: 0.97 }}
                                         className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-colors ${
                                             input.role === "student"
                                                 ? "border-[#6A38C2] bg-[#6A38C2]/5 text-[#6A38C2]"
@@ -180,9 +190,11 @@ export const Login = () => {
                                         <span>
                                             Student
                                         </span>
-                                    </label>
+                                    </motion.label>
 
-                                    <label
+                                    <motion.label
+                                        whileHover={{ y: -2 }}
+                                        whileTap={{ scale: 0.97 }}
                                         className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-colors ${
                                             input.role === "recruiter"
                                                 ? "border-[#6A38C2] bg-[#6A38C2]/5 text-[#6A38C2]"
@@ -201,7 +213,7 @@ export const Login = () => {
                                         <span>
                                             Recruiter
                                         </span>
-                                    </label>
+                                    </motion.label>
                                 </div>
                             </div>
                             {
@@ -224,7 +236,7 @@ export const Login = () => {
                                     Signup
                                 </Link>
                             </div>
-                        </form>
+                        </motion.form>
                     </div>
                 </div>
             </div>

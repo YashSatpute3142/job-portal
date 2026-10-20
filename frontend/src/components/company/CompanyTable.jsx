@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import { Building2, Edit2, MoreHorizontal, SearchX } from "lucide-react"
 import { Avatar, AvatarImage } from "../ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
@@ -14,6 +15,8 @@ const formatDate = (value) => {
     }
     return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
 }
+
+const MotionRow = motion.create(TableRow)
 
 export const CompanyTable = () => {
 
@@ -71,8 +74,11 @@ export const CompanyTable = () => {
                                 const displayName = name || "Unnamed Company"
                                 const initial = displayName.trim().charAt(0).toUpperCase() || "C"
                                 return (
-                                    <TableRow
-                                        key={company?._id || index}
+                                    <MotionRow
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3, delay: Math.min(index, 10) * 0.04 }}
+                                    key={company?._id || index}
                                         className="border-b border-gray-100 transition-colors last:border-0 hover:bg-gray-50/80"
                                     >
                                         <TableCell className="px-4 py-3 sm:px-6">
@@ -109,7 +115,7 @@ export const CompanyTable = () => {
                                                 </PopoverContent>
                                             </Popover>
                                         </TableCell>
-                                    </TableRow>
+                                    </MotionRow>
                                 )
                             })
                         }

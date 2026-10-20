@@ -3,14 +3,15 @@ import { setAllJobs } from "@/redux/jobSlice"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-export const useGetAllJobs = () => {
+export const useGetAllJobs = (useSearch = false) => {
     const dispatch = useDispatch()
     const {searchedQuery} = useSelector(store => store.job)
+    const keyword = useSearch ? searchedQuery : ""
     useEffect(() => {
         let cancelled = false
         const fetchAllJobs = async () => {
             try {
-                const res = await getAllJobs(searchedQuery)
+                const res = await getAllJobs(keyword)
                 if (cancelled) return
 
                 if (res.data.success) {
@@ -27,5 +28,5 @@ export const useGetAllJobs = () => {
         return () => {
             cancelled = true
         }
-    }, [searchedQuery])
+    }, [keyword])
 }

@@ -1,3 +1,5 @@
+import { motion } from "framer-motion"
+import { easeOut } from "@/lib/motion"
 import { useParams } from "react-router-dom"
 import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
@@ -66,7 +68,12 @@ export const JobDescription = () => {
 
    return (
     <div className="max-w-6xl mx-auto my-10 px-4">
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8">
+        <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: easeOut }}
+            className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8"
+        >
             <div className="flex items-start justify-between gap-6">
                 <div>
                     <h1 className="font-bold text-3xl text-gray-900">{title}</h1>
@@ -103,37 +110,37 @@ export const JobDescription = () => {
             </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-5">
-                <div className="bg-gray-50 rounded-lg p-4">
+                <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.00 }} className="bg-gray-50 rounded-lg p-4">
                     <p className="text-sm text-gray-500">Role</p>
                     <p className="font-semibold text-gray-900 mt-1">{title}</p>
-                </div>
+                </motion.div>
 
-                <div className="bg-gray-50 rounded-lg p-4">
+                <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.08 }} className="bg-gray-50 rounded-lg p-4">
                     <p className="text-sm text-gray-500">Location</p>
                     <p className="font-semibold text-gray-900 mt-1">{location}</p>
-                </div>
+                </motion.div>
 
-                <div className="bg-gray-50 rounded-lg p-4">
+                <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.00 }} className="bg-gray-50 rounded-lg p-4">
                     <p className="text-sm text-gray-500">Experience</p>
                     <p className="font-semibold text-gray-900 mt-1">{experienceLevel} years</p>
-                </div>
+                </motion.div>
 
-                <div className="bg-gray-50 rounded-lg p-4">
+                <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.08 }} className="bg-gray-50 rounded-lg p-4">
                     <p className="text-sm text-gray-500">Salary</p>
                     <p className="font-semibold text-gray-900 mt-1">{salary} LPA</p>
-                </div>
+                </motion.div>
 
-                <div className="bg-gray-50 rounded-lg p-4">
+                <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.00 }} className="bg-gray-50 rounded-lg p-4">
                     <p className="text-sm text-gray-500">Total Applicants</p>
                     <p className="font-semibold text-gray-900 mt-1">{applications?.length || 0}</p>
-                </div>
+                </motion.div>
 
-                <div className="bg-gray-50 rounded-lg p-4">
+                <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.08 }} className="bg-gray-50 rounded-lg p-4">
                     <p className="text-sm text-gray-500">Posted Date</p>
                     <p className="font-semibold text-gray-900 mt-1">
                         {new Date(createdAt).toLocaleDateString()}
                     </p>
-                </div>
+                </motion.div>
             </div>
 
             <div className="mt-8">
@@ -161,7 +168,7 @@ export const JobDescription = () => {
                     ))}
                 </div>
             </div>
-        </div>
+        </motion.div>
     </div>
 )
 }

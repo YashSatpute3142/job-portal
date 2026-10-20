@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { container, easeOut, fadeUp } from "@/lib/motion";
 import { Button } from "@base-ui/react";
 import { MousePointerClick, Search } from "lucide-react";
 import { useColorReveal } from "@/hooks/useColorReveal";
@@ -30,23 +32,29 @@ export const HeroSection = ({ onSearch }) => {
 
             <div className="mx-auto grid min-h-[640px] max-w-[1400px] lg:min-h-[calc(100vh-4rem)] lg:grid-cols-[1fr_1.05fr]">
                 <div className="relative z-10 flex items-center px-6 py-14 sm:px-10 lg:py-0 lg:pl-16 lg:pr-0">
-                    <div className="flex max-w-xl flex-col gap-6 text-left">
-                        <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#6A38C2]/15 bg-white/80 px-4 py-2 text-sm font-medium text-[#6A38C2] shadow-sm backdrop-blur">
+                    <motion.div
+                        variants={container(0.1, 0.1)}
+                        initial="hidden"
+                        animate="show"
+                        className="flex max-w-xl flex-col gap-6 text-left"
+                    >
+                        <motion.span variants={fadeUp} className="inline-flex w-fit items-center gap-2 rounded-full border border-[#6A38C2]/15 bg-white/80 px-4 py-2 text-sm font-medium text-[#6A38C2] shadow-sm backdrop-blur">
                             <span className="h-2 w-2 rounded-full bg-[#F83002]" />
                             No 1 Job Hunt Website
-                        </span>
+                        </motion.span>
 
-                        <h1 className="text-4xl font-bold leading-[1.08] tracking-tight text-gray-950 sm:text-5xl lg:text-6xl">
+                        <motion.h1 variants={fadeUp} className="text-4xl font-bold leading-[1.08] tracking-tight text-gray-950 sm:text-5xl lg:text-6xl">
                             Search, Apply &amp; <br className="hidden sm:block" />
                             Get Your <span className="bg-gradient-to-r from-[#6A38C2] to-[#9b6bf0] bg-clip-text text-transparent">Dream Jobs</span>
-                        </h1>
+                        </motion.h1>
 
-                        <p className="max-w-md text-base leading-relaxed text-gray-600">
+                        <motion.p variants={fadeUp} className="max-w-md text-base leading-relaxed text-gray-600">
                             Browse thousands of openings from verified companies, apply in a
                             couple of clicks, and track every application in one place.
-                        </p>
+                        </motion.p>
 
-                        <form
+                        <motion.form
+                            variants={fadeUp}
                             onSubmit={handleSubmit}
                             role="search"
                             className="flex w-full items-center gap-2 rounded-full border border-gray-200 bg-white py-1.5 pl-5 pr-1.5 shadow-xl shadow-[#6A38C2]/10 transition focus-within:border-[#6A38C2] focus-within:ring-4 focus-within:ring-[#6A38C2]/15"
@@ -67,9 +75,9 @@ export const HeroSection = ({ onSearch }) => {
                             >
                                 <Search className="h-5 w-5" />
                             </Button>
-                        </form>
+                        </motion.form>
 
-                        <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+                        <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
                             <span>Popular:</span>
                             {QUICK_SEARCHES.map((term) => (
                                 <button
@@ -81,11 +89,16 @@ export const HeroSection = ({ onSearch }) => {
                                     {term}
                                 </button>
                             ))}
-                        </div>
-                    </div>
+                        </motion.div>
+                    </motion.div>
                 </div>
 
-                <div className="relative h-[420px] sm:h-[500px] lg:-ml-24 lg:h-auto">
+                <motion.div
+                    initial={{ opacity: 0, x: 48 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.9, delay: 0.2, ease: easeOut }}
+                    className="relative h-[420px] sm:h-[500px] lg:-ml-24 lg:h-auto"
+                >
                     <div
                         ref={stageRef}
                         role="button"
@@ -129,7 +142,7 @@ export const HeroSection = ({ onSearch }) => {
                         <MousePointerClick className="h-4 w-4 text-[#6A38C2]" />
                         Click the photo to add colour
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

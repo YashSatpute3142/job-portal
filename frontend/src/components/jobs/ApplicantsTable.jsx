@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import { Check, FileText, MoreHorizontal, UserX, X } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
@@ -16,6 +17,8 @@ const formatDate = (value) => {
 }
 
 const headClass = "px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-500 sm:px-6"
+
+const MotionRow = motion.create(TableRow)
 
 export const ApplicantsTable = () => {
     const { applicants } = useSelector(store => store.application)
@@ -80,8 +83,11 @@ export const ApplicantsTable = () => {
                                 const initial = fullName.trim().charAt(0).toUpperCase() || "U"
 
                                 return (
-                                    <TableRow
-                                        key={item?._id || index}
+                                    <MotionRow
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3, delay: Math.min(index, 10) * 0.04 }}
+                                    key={item?._id || index}
                                         className="border-b border-gray-100 transition-colors last:border-0 hover:bg-gray-50/80"
                                     >
                                         <TableCell className="px-4 py-3 sm:px-6">
@@ -148,7 +154,7 @@ export const ApplicantsTable = () => {
                                                 </PopoverContent>
                                             </Popover>
                                         </TableCell>
-                                    </TableRow>
+                                    </MotionRow>
                                 )
                             })
                         }

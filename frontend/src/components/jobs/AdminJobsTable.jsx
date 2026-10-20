@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import { BriefcaseBusiness, Edit2, Eye, MoreHorizontal, SearchX } from "lucide-react"
 import { Avatar, AvatarImage } from "../ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
@@ -13,6 +14,8 @@ const formatDate = (value) => {
     }
     return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
 }
+
+const MotionRow = motion.create(TableRow)
 
 export const AdminJobsTable = () => {
     const { allAdminJobs, searchJobByText } = useSelector(store => store.job)
@@ -72,7 +75,10 @@ export const AdminJobsTable = () => {
                             const initial = companyName.trim().charAt(0).toUpperCase() || "C"
 
                             return (
-                                <TableRow
+                                <MotionRow
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3, delay: Math.min(index, 10) * 0.04 }}
                                     key={job?._id || index}
                                     className="border-b border-gray-100 transition-colors last:border-0 hover:bg-gray-50/80"
                                 >
@@ -120,7 +126,7 @@ export const AdminJobsTable = () => {
                                             </PopoverContent>
                                         </Popover>
                                     </TableCell>
-                                </TableRow>
+                                </MotionRow>
                             )
                         })}
                     </TableBody>

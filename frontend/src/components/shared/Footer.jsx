@@ -1,6 +1,13 @@
+import { motion } from "framer-motion";
 export const Footer = () => {
      return (
-        <footer className="border-t border-gray-200 bg-white">
+        <motion.footer
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="border-t border-gray-200 bg-white"
+        >
             <div className="max-w-7xl mx-auto px-6 py-6">
 
                 <div className="flex items-center justify-between">
@@ -57,6 +64,6 @@ export const Footer = () => {
                 </div>
 
             </div>
-        </footer>
+        </motion.footer>
     );
 }

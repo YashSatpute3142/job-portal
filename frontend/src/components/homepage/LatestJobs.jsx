@@ -1,3 +1,5 @@
+import { motion } from "framer-motion"
+import { container, fadeUp, revealOnScroll, viewportOnce } from "@/lib/motion"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { ArrowRight, Briefcase } from "lucide-react"
@@ -10,22 +12,30 @@ export const LatestJobs = () => {
     return (
         <section className="bg-white px-6 py-20">
             <div className="mx-auto max-w-7xl">
-                <div className="mx-auto mb-12 flex max-w-2xl flex-col items-center gap-4 text-center">
+                <motion.div {...revealOnScroll} className="mx-auto mb-12 flex max-w-2xl flex-col items-center gap-4 text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-950 sm:text-4xl lg:text-5xl">
                         <span className="text-[#6A38C2]">Latest & Top</span> Job Openings
                     </h2>
                     <p className="text-base leading-relaxed text-gray-600">
                         Explore the newest opportunities from companies hiring now.
                     </p>
-                </div>
+                </motion.div>
                 {hasJobs ? (
                     <>
-                        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                        <motion.div
+                            variants={container(0.1)}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={viewportOnce}
+                            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+                        >
                             {allJobs.slice(0, 6).map((job) => (
-                                <LatestJobCards key={job._id} job={job}  />
+                                <motion.div key={job._id} variants={fadeUp} className="h-full">
+                                    <LatestJobCards job={job} />
+                                </motion.div>
                             ))}
-                        </div>
-                        <div className="mt-12 flex justify-center">
+                        </motion.div>
+                        <motion.div {...revealOnScroll} className="mt-12 flex justify-center">
                             <button
                                 type="button"
                                 onClick={() => navigate("/jobs")}
@@ -34,10 +44,10 @@ export const LatestJobs = () => {
                                 View All Jobs
                                 <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
                             </button>
-                        </div>
+                        </motion.div>
                     </>
                 ) : (
-                    <div className="mx-auto flex max-w-md flex-col items-center gap-3 rounded-2xl border border-dashed border-gray-300 bg-gray-50/60 px-6 py-14 text-center">
+                    <motion.div {...revealOnScroll} className="mx-auto flex max-w-md flex-col items-center gap-3 rounded-2xl border border-dashed border-gray-300 bg-gray-50/60 px-6 py-14 text-center">
                         <span className="flex size-14 items-center justify-center rounded-full bg-[#6A38C2]/10 text-[#6A38C2]">
                             <Briefcase className="size-6" strokeWidth={1.75} />
                         </span>
@@ -47,7 +57,7 @@ export const LatestJobs = () => {
                         <p className="text-sm text-gray-500">
                             Please check back soon for new opportunities.
                         </p>
-                    </div>
+                    </motion.div>
                 )}
             </div>
         </section>

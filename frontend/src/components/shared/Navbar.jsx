@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { easeOut } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { PopoverContent, PopoverTrigger, Popover } from "../ui/popover";
@@ -45,7 +47,12 @@ const Navbar = () => {
     const navLinkClass = "text-sm text-gray-700 transition-colors hover:text-[#6A38C2]";
 
     return (
-        <div className="sticky top-0 z-40 border-b border-gray-100 bg-white/95 backdrop-blur">
+        <motion.div
+            initial={{ y: -24, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.45, ease: easeOut }}
+            className="sticky top-0 z-40 border-b border-gray-100 bg-white/95 backdrop-blur"
+        >
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight">
@@ -59,26 +66,26 @@ const Navbar = () => {
                             user && user.role === "recruiter" ? (
                                 <>
                                     <Link to="/admin/companies" className={navLinkClass}>
-                                        <li>Companies</li>
+                                        <motion.li whileHover={{ y: -2 }} transition={{ duration: 0.15 }}>Companies</motion.li>
                                     </Link>
 
                                     <Link to="/admin/jobs" className={navLinkClass}>
-                                        <li>Jobs</li>
+                                        <motion.li whileHover={{ y: -2 }} transition={{ duration: 0.15 }}>Jobs</motion.li>
                                     </Link>
                                 </>
                             ) : (
                                 <>
 
                                     <Link to="/" className={navLinkClass}>
-                                        <li>Home</li>
+                                        <motion.li whileHover={{ y: -2 }} transition={{ duration: 0.15 }}>Home</motion.li>
                                     </Link>
 
                                     <Link to="/jobs" className={navLinkClass}>
-                                        <li>Jobs</li>
+                                        <motion.li whileHover={{ y: -2 }} transition={{ duration: 0.15 }}>Jobs</motion.li>
                                     </Link>
 
                                     <Link to="/browse" className={navLinkClass}>
-                                        <li>Browse</li>
+                                        <motion.li whileHover={{ y: -2 }} transition={{ duration: 0.15 }}>Browse</motion.li>
                                     </Link>
                                 </>
                             )
@@ -167,7 +174,7 @@ const Navbar = () => {
                     )}
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 
 

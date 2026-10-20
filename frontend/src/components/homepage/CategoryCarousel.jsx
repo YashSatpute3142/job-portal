@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { easeOut, revealOnScroll } from "@/lib/motion";
 import { setSearchedQuery } from "@/redux/jobSlice";
 import {
     Carousel,
@@ -44,7 +46,7 @@ export const CategoryCarousel = ({ onSelect }) => {
     return (
         <section className="bg-white px-6 py-20">
             <div className="mx-auto max-w-6xl">
-                <div className="mx-auto mb-12 flex max-w-2xl flex-col items-center gap-4 text-center">
+                <motion.div {...revealOnScroll} className="mx-auto mb-12 flex max-w-2xl flex-col items-center gap-4 text-center">
                     <span className="rounded-full border border-gray-200 bg-gray-50 px-4 py-1.5 text-sm font-medium text-[#6A38C2]">
                         Browse by field
                     </span>
@@ -54,16 +56,24 @@ export const CategoryCarousel = ({ onSelect }) => {
                     <p className="text-base leading-relaxed text-gray-600">
                         Find the right opportunities and build your career in your field.
                     </p>
-                </div>
+                </motion.div>
 
                 <div className="px-10 sm:px-14">
                     <Carousel opts={{ align: "start", loop: true }} className="w-full">
                         <CarouselContent className="py-6">
-                            {categories.map(({ name, icon: Icon }) => (
+                            {categories.map(({ name, icon: Icon }, index) => (
                                 <CarouselItem
                                     key={name}
                                     className="basis-full sm:basis-1/2 lg:basis-1/4"
                                 >
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 28 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, amount: 0.3 }}
+                                        transition={{ duration: 0.5, delay: (index % 4) * 0.08, ease: easeOut }}
+                                        whileTap={{ scale: 0.97 }}
+                                        className="h-full"
+                                    >
                                     <button
                                         type="button"
                                         onClick={() => SearchJobHandler(name)}
@@ -89,6 +99,7 @@ export const CategoryCarousel = ({ onSelect }) => {
                                             <ArrowUpRight className="size-5 shrink-0 -translate-x-1 translate-y-1 text-[#6A38C2] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
                                         </span>
                                     </button>
+                                    </motion.div>
                                 </CarouselItem>
                             ))}
                         </CarouselContent>

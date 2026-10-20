@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { easeOut } from "@/lib/motion";
 import { Job } from "@/components/jobs/Job"
 import { useGetAllJobs } from "@/hooks/useGetAllJobs";
 import { setSearchedQuery } from "@/redux/jobSlice";
@@ -8,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 
 export const Browse = () => {
-    useGetAllJobs()
+    useGetAllJobs(true)
     const {allJobs} = useSelector(store => store.job);
     const dispatch = useDispatch()
     const mounted = useRef(false)
@@ -45,9 +47,16 @@ export const Browse = () => {
                     ) : (
                         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                             {
-                            allJobs.map((job) => {
+                            allJobs.map((job, index) => {
                                 return(
-                                    <Job key={job._id} job= {job} />
+                                    <motion.div
+                                        key={job._id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.4, delay: Math.min(index, 9) * 0.05, ease: easeOut }}
+                                    >
+                                        <Job job= {job} />
+                                    </motion.div>
                                 )
                             })
                             }
